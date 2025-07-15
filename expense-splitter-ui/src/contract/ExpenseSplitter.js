@@ -1,4 +1,4 @@
-export const contractAddress = "0xF53E43c3A5B6f7cb21cab282b977CcEC1Bc4e09B";
+export const contractAddress = "0xcce76fF2d40117c1d0aAF7a4a1fBC9A7718F70dE";
 export const contractABI = [
 	{
 		"inputs": [
@@ -108,14 +108,8 @@ export const contractABI = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "participant",
-				"type": "address"
-			}
-		],
-		"name": "removeParticipant",
+		"inputs": [],
+		"name": "resetAll",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
