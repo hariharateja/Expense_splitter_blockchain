@@ -30,8 +30,8 @@ export default function AddParticipant({ userAddress }) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow mt-4 max-w-md">
-      <h2 className="text-xl font-semibold mb-2 text-purple-700">➕ Add Participant</h2>
+    <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-xl">
+      <h2 className="ext-xl font-semibold mb-4"> Add Participant</h2>
       <input
         className="border p-2 w-full mb-2 rounded"
         type="text"

@@ -13,11 +13,9 @@ export default function ParticipantList() {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const contract = new ethers.Contract(contractAddress, contractABI, provider);
 
-        const addresses = await contract.getAllParticipants();
         const allBalances = await contract.getAllBalances();
-
-        setParticipants(allBalances[0]); // address[]
-        setBalances(allBalances[1].map((b) => parseInt(b))); // int[]
+        setParticipants(allBalances[0]); // addresses
+        setBalances(allBalances[1].map((b) => parseInt(b))); // balances in wei
       } catch (err) {
         console.error("Error loading balances:", err);
       } finally {
@@ -28,29 +26,36 @@ export default function ParticipantList() {
     fetchData();
   }, []);
 
-  if (loading) return <p>🔄 Loading participant balances...</p>;
+  if (loading) return <p className="text-white">🔄 Loading participant balances...</p>;
 
   return (
-    <div className="mt-6 bg-white p-4 rounded-xl shadow-md max-w-md">
-      <h2 className="text-xl font-semibold text-purple-700 mb-3">📋 Balances</h2>
-      <ul className="space-y-2">
-        {participants.map((addr, index) => (
-          <li
-            key={addr}
-            className={`p-2 rounded border ${
-              balances[index] === 0
-                ? "border-gray-300"
-                : balances[index] < 0
-                ? "border-red-400 bg-red-100"
-                : "border-green-400 bg-green-100"
-            }`}
-          >
-            <span className="font-mono text-sm">{addr.slice(0, 6)}...{addr.slice(-4)}</span>
-            <span className="float-right font-semibold">
-              {balances[index]} wei
-            </span>
-          </li>
-        ))}
+    <div className="mt-10 max-w-xl mx-auto bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-xl">
+      <h2 className="text-2xl font-semibold text-white mb-4 tracking-wide">📋 Participant Balances</h2>
+
+      <ul className="space-y-3 text-sm">
+        {participants.map((addr, index) => {
+          const balance = balances[index];
+          const isPositive = balance > 0;
+          const isNegative = balance < 0;
+
+          return (
+            <li
+              key={addr}
+              className={`flex justify-between items-center p-3 rounded-lg shadow-md transition-all duration-300 ${
+                isPositive
+                  ? "bg-green-600/20 border border-green-300 text-green-200"
+                  : isNegative
+                  ? "bg-red-600/20 border border-red-300 text-red-200"
+                  : "bg-gray-600/10 border border-gray-400 text-gray-200"
+              }`}
+            >
+              <span className="font-mono">{addr.slice(0, 6)}...{addr.slice(-4)}</span>
+              <span className="font-semibold">
+                {ethers.formatEther(balance)} ETH
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
