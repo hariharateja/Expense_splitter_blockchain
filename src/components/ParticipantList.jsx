@@ -15,7 +15,7 @@ export default function ParticipantList() {
 
         const allBalances = await contract.getAllBalances();
         setParticipants(allBalances[0]); // addresses
-        setBalances(allBalances[1].map((b) => parseInt(b))); // balances in wei
+        setBalances(allBalances[1].map((b) => BigInt(b))); // balances in wei
       } catch (err) {
         console.error("Error loading balances:", err);
       } finally {
